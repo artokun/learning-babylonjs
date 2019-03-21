@@ -22,11 +22,7 @@ const App: React.SFC = () => {
     })
   }
 
-  return (
-    <div>
-      <Scene onSceneMount={onSceneMount} />
-    </div>
-  )
+  return <Scene onSceneMount={onSceneMount} />
 }
 
 export { App }
