@@ -1,22 +1,21 @@
 import React, { useEffect, useRef } from 'react'
-
-import * as BABYLON from 'babylonjs'
+import { Engine, Scene, EngineOptions } from 'babylonjs'
 
 export type SceneEventArgs = {
-  engine: BABYLON.Engine
-  scene: BABYLON.Scene
+  engine: Engine
+  scene: Scene
   canvas: HTMLCanvasElement
 }
 
 export type SceneProps = {
-  engineOptions?: BABYLON.EngineOptions
+  engineOptions?: EngineOptions
   adaptToDeviceRatio?: boolean
   onSceneMount?: (args: SceneEventArgs) => void
   width?: number
   height?: number
 }
 
-export const Scene: React.SFC<
+const BabylonScene: React.SFC<
   SceneProps & React.HTMLAttributes<HTMLCanvasElement>
 > = ({
   engineOptions,
@@ -26,19 +25,14 @@ export const Scene: React.SFC<
   height,
   ...rest
 }) => {
-  let scene: BABYLON.Scene
-  let engine: BABYLON.Engine
+  let scene: Scene
+  let engine: Engine
   const canvas: React.RefObject<HTMLCanvasElement> = useRef(null)
 
   useEffect(() => {
     // basic init
-    engine = new BABYLON.Engine(
-      canvas.current,
-      true,
-      engineOptions,
-      adaptToDeviceRatio
-    )
-    scene = new BABYLON.Scene(engine)
+    engine = new Engine(canvas.current, true, engineOptions, adaptToDeviceRatio)
+    scene = new Scene(engine)
 
     // scene mount
     if (typeof onSceneMount === 'function' && canvas.current) {
@@ -58,12 +52,6 @@ export const Scene: React.SFC<
     }
   }
 
-  // const onCanvasLoaded = (c: HTMLCanvasElement) => {
-  //   if (c !== null) {
-  //     canvas = c
-  //   }
-  // }
-
   const opts: any = {}
 
   if (width !== undefined && height !== undefined) {
@@ -73,3 +61,5 @@ export const Scene: React.SFC<
 
   return <canvas {...opts} {...rest} ref={canvas} />
 }
+
+export { BabylonScene as Scene }
