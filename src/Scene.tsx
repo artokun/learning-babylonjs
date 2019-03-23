@@ -1,5 +1,11 @@
 import React, { useState } from 'react'
-import { FreeCamera, Vector3, HemisphericLight, Mesh } from 'babylonjs'
+import {
+  FreeCamera,
+  Vector3,
+  HemisphericLight,
+  Mesh,
+  GroundMesh
+} from 'babylonjs'
 import { Game, SceneEventArgs } from './Game'
 
 export interface State {
@@ -44,7 +50,14 @@ const initGame = (
   e: SceneEventArgs,
   state: State,
   setState: React.Dispatch<React.SetStateAction<State>>
-) => {}
+) => {
+  const { scene } = e
+
+  const sphere = Mesh.CreateSphere('sphere', 16, 2, scene)
+  sphere.position.y = 1
+
+  const ground = Mesh.CreateGround('ground', 6, 6, 2, scene)
+}
 
 const initScene = (e: SceneEventArgs) => {
   const { canvas, scene } = e
