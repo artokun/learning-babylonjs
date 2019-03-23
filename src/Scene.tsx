@@ -1,11 +1,5 @@
 import React, { useState } from 'react'
-import {
-  FreeCamera,
-  Vector3,
-  HemisphericLight,
-  Mesh,
-  GroundMesh
-} from 'babylonjs'
+import { FreeCamera, Vector3, HemisphericLight, Mesh } from 'babylonjs'
 import { Game, SceneEventArgs } from './Game'
 
 export interface State {
